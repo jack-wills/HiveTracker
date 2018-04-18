@@ -1,0 +1,142 @@
+﻿1>------ Build started: Project: Test, Configuration: Debug x64 ------
+1>Test.cpp
+1>c:\users\jack\desktop\university work\test\test\bee.h(6): error C2061: syntax error: identifier 'vector'
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C3646: 'getPrediction': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C2059: syntax error: '('
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(13): error C2061: syntax error: identifier 'vector'
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C3646: 'print_bee': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C2059: syntax error: '('
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(20): error C3646: 'nextPrediction': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(24): error C3646: 'previousCenter': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(24): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(30): error C3646: 'center': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(30): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(31): error C3646: 'moment': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(33): error C3646: 'color': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\test.cpp(14): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+1>c:\users\jack\desktop\university work\test\test\test.cpp(15): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+1>c:\users\jack\desktop\university work\test\test\test.cpp(314): error C2039: 'getPrediction': is not a member of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\test.cpp(314): error C2660: 'cv::pointPolygonTest': function does not take 2 arguments
+1>c:\users\jack\desktop\university work\test\test\test.cpp(318): error C2660: 'Bee::update_bee': function does not take 1 arguments
+1>c:\users\jack\desktop\university work\test\test\test.cpp(326): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+1>c:\users\jack\desktop\university work\test\test\test.cpp(327): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+1>c:\users\jack\desktop\university work\test\test\test.cpp(361): error C2660: 'Bee::update_bee': function does not take 1 arguments
+1>c:\users\jack\desktop\university work\test\test\test.cpp(372): error C2440: '<function-style-cast>': cannot convert from 'initializer list' to 'Bee'
+1>c:\users\jack\desktop\university work\test\test\test.cpp(372): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+1>c:\users\jack\desktop\university work\test\test\test.cpp(372): error C2512: 'Bee': no appropriate default constructor available
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\test.cpp(394): error C2039: 'print_bee': is not a member of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>Bee.cpp
+1>c:\users\jack\desktop\university work\test\test\bee.h(6): error C2061: syntax error: identifier 'vector'
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C3646: 'getPrediction': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C2059: syntax error: '('
+1>c:\users\jack\desktop\university work\test\test\bee.h(9): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(10): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(13): error C2061: syntax error: identifier 'vector'
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C3646: 'print_bee': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C2059: syntax error: '('
+1>c:\users\jack\desktop\university work\test\test\bee.h(14): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(20): error C3646: 'nextPrediction': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(20): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(21): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(24): error C3646: 'previousCenter': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(24): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(26): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(27): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(29): error C2238: unexpected token(s) preceding ';'
+1>c:\users\jack\desktop\university work\test\test\bee.h(30): error C3646: 'center': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(30): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(31): error C3646: 'moment': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.h(33): error C3646: 'color': unknown override specifier
+1>c:\users\jack\desktop\university work\test\test\bee.h(33): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(5): error C2061: syntax error: identifier 'vector'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(5): error C2065: 'c': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(5): error C2614: 'Bee': illegal member initialization: 'contour' is not a base or member
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(5): error C2614: 'Bee': illegal member initialization: 'track' is not a base or member
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(7): error C2065: 'color': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(7): error C2065: 'rng': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(7): error C2228: left of '.uniform' must have class/struct/union
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(7): note: type is 'unknown-type'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(7): error C3861: 'Scalar': identifier not found
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(12): error C2065: 'contour': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(12): error C3861: 'Mat': identifier not found
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(12): error C2065: 'hull': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(12): error C3861: 'convexHull': identifier not found
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(13): error C2065: 'moment': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(13): error C2065: 'contour': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(13): error C3861: 'moments': identifier not found
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C2065: 'center': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C2065: 'moment': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C2228: left of '.m10' must have class/struct/union
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): note: type is 'unknown-type'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C2228: left of '.m00' must have class/struct/union
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): note: type is 'unknown-type'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C2228: left of '.m01' must have class/struct/union
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): note: type is 'unknown-type'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(14): error C3861: 'Point2f': identifier not found
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(15): error C2065: 'track': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(15): error C2228: left of '.size' must have class/struct/union
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(15): note: type is 'unknown-type'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(16): error C2065: 'track': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(16): error C2065: 'center': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(18): error C2065: 'previousCenter': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(18): error C2065: 'center': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(21): error C2065: 'contour': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(39): error C2039: 'getPrediction': is not a member of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(39): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(39): error C2146: syntax error: missing ';' before identifier 'getPrediction'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(39): error C2143: syntax error: missing ';' before '{'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(39): error C2447: '{': missing function header (old-style formal list?)
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(43): error C2143: syntax error: missing ';' before '<'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(43): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(43): error C2039: 'getPredictionArea': is not a member of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(43): error C2143: syntax error: missing ';' before '{'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(43): error C2447: '{': missing function header (old-style formal list?)
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(54): error C2065: 'Point': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(54): error C2065: 'newContour': undeclared identifier
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(54): error C2761: 'void Bee::update_bee(void)': redeclaration of member is not allowed
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(54): error C2448: 'Bee::update_bee': function-style initializer appears to be a function definition
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(67): error C2039: 'print_bee': is not a member of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.h(4): note: see declaration of 'Bee'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(67): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(67): error C2146: syntax error: missing ';' before identifier 'print_bee'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(67): error C2143: syntax error: missing ';' before '{'
+1>c:\users\jack\desktop\university work\test\test\bee.cpp(67): error C2447: '{': missing function header (old-style formal list?)
+1>Generating Code...
+1>Done building project "Test.vcxproj" -- FAILED.
+========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========
