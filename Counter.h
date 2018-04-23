@@ -8,7 +8,8 @@ public:
 	Mat drawCounter(Mat image);
 	~Counter();
 private:
-	int counter;
+	int enterCounter;
+	int exitCounter;
 	vector<Bee>& beesArray;
 	const int imgWidth;
 	const int imgHeight;

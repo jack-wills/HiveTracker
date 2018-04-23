@@ -12,11 +12,11 @@ fpsCounter::fpsCounter()
 void fpsCounter::updateFps() {
 	if (time(0) - timeStart >= 1) {
 		fps = frameCounter;
+		cout << "FPS = " << fps << endl;
 		frameCounter = 0;
 		timeStart = time(0);
 	}
 	frameCounter++;
-	cout << "FPS = " << fps << endl;
 }
 
 Mat fpsCounter::printFPS(Mat image) {

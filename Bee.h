@@ -15,12 +15,14 @@ public:
 	bool beeUpdated(void);
 	void updateBee(vector<Point> newContour);
 	Mat printBee(Mat image); 
-	float getAbsVelocity(void);
+	float getUncertainty(void);
 	Point getCenter();
 	Point getPreviousCenter();
+	void updateKalman(void);
+	void predictKalman(void);
 
 private:
-	float absVelocity;
+	float uncertainty;
 	char frameCount;
 	bool updated;
 	int searchRadius;
@@ -37,5 +39,8 @@ private:
 	Moments moment;
 	int tag;
 	Scalar color;
+	KalmanFilter kalman;
+	Mat_<float> measurement;
+	Mat state, processNoise;
 };
 

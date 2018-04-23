@@ -20,7 +20,31 @@ Bee::Bee(int t, vector<Point> c): contour(c), tag(t), track(4) {
 	previousCenter = center;
 	searchRadius = 25;
 	updateBee(contour);
-	absVelocity = 300;
+	uncertainty = 300;
+	nextPrediction = center;
+
+	state = Mat(4, 1, CV_32F);
+	processNoise = Mat(4, 1, CV_32F);
+	kalman.init(4, 2, 0, CV_32F);
+	measurement = Mat(2, 1, CV_32F);
+	measurement.setTo(Scalar(0));
+
+	kalman.statePre.at<float>(0) = center.x;
+	kalman.statePre.at<float>(1) = center.y;
+	kalman.statePre.at<float>(2) = 0;
+	kalman.statePre.at<float>(3) = 0;
+	kalman.statePost.at<float>(0) = center.x;
+	kalman.statePost.at<float>(1) = center.y;
+	kalman.statePost.at<float>(2) = 0;
+	kalman.statePost.at<float>(3) = 0;
+
+	kalman.transitionMatrix = (Mat_<float>(4, 4) << 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1);
+
+	setIdentity(kalman.measurementMatrix);
+	setIdentity(kalman.processNoiseCov, Scalar::all(1e-5));
+	setIdentity(kalman.measurementNoiseCov, Scalar::all(1e-4));
+	setIdentity(kalman.errorCovPost, Scalar::all(0.1));
+
 }
 
 bool Bee::endFrame() {
@@ -39,6 +63,7 @@ bool Bee::endFrame() {
 
 
 Point2f Bee::getPrediction(void) {
+
 	return nextPrediction;
 }
 
@@ -54,8 +79,8 @@ bool Bee::beeUpdated(void) {
 	return updated;
 }
 
-float Bee::getAbsVelocity() {
-	return absVelocity;
+float Bee::getUncertainty() {
+	return uncertainty;
 }
 
 Point Bee::getCenter() {
@@ -75,26 +100,12 @@ void Bee::updateBee(vector<Point> newContour) {
 	track[trackPointer] = center;
 	trackPointer = (trackPointer + 1) % track.size();
 	updated = 1;
-	velocityX = center.x - previousCenter.x;
-	velocityY = center.y - previousCenter.y;
-	if (velocityX > 75) {
-		velocityX = 75;
-	}
-	if (velocityX < -75) {
-		velocityX = -75;
-	}
-	if (velocityY > 75) {
-		velocityY = 75;
-	}
-	if (velocityY < -75) {
-		velocityY = -75;
-	}
-	//cout << "Vel for bee " << tag << " = " << velocityX << ", " << velocityY << endl;
-	absVelocity = sqrt(velocityX*velocityX +velocityY*velocityY);
-	//cout << "Uncertainty for bee " << tag << " = " << uncertainty << endl;
-	nextPrediction = Point2f(center.x + velocityX, center.y + velocityY);
+	int diffX = center.x - nextPrediction.x;
+	int diffY = center.y - nextPrediction.y;
+	uncertainty = sqrt(diffX * diffX + diffY * diffY);
 }
 Mat Bee::printBee(Mat image) {
+
 	if (!updated) {
 		drawContours(image, vector<vector<Point> >(1, contour), 0, color, 1);
 		line(image, center, nextPrediction, color, 2);
@@ -107,6 +118,20 @@ Mat Bee::printBee(Mat image) {
 		putText(image, to_string(tag), Point(center.x - 5, center.y + 10), FONT_HERSHEY_TRIPLEX, 1, color);
 	}
 	return image;
+}
+
+void Bee::updateKalman(void) {
+	measurement(0) = center.x;
+	measurement(1) = center.y;
+	Mat mEstimated;
+	mEstimated = kalman.correct(measurement);
+	Mat mPrediction = kalman.predict();
+	nextPrediction = Point2f(mPrediction.at<float>(0), mPrediction.at<float>(1));
+}
+
+void Bee::predictKalman(void) {
+	Mat mPrediction = kalman.predict();
+	nextPrediction = Point2f(mPrediction.at<float>(0), mPrediction.at<float>(1));
 }
 
 Bee::~Bee()
