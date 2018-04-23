@@ -33,10 +33,6 @@ Bee::Bee(int t, vector<Point> c): contour(c), tag(t), track(4) {
 	kalman.statePre.at<float>(1) = center.y;
 	kalman.statePre.at<float>(2) = 0;
 	kalman.statePre.at<float>(3) = 0;
-	kalman.statePost.at<float>(0) = center.x;
-	kalman.statePost.at<float>(1) = center.y;
-	kalman.statePost.at<float>(2) = 0;
-	kalman.statePost.at<float>(3) = 0;
 
 	kalman.transitionMatrix = (Mat_<float>(4, 4) << 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1);
 
