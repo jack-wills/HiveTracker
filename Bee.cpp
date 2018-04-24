@@ -115,7 +115,11 @@ void Bee::updateBee(vector<Point> newContour) {
     uncertainty = sqrt(diffX * diffX + diffY * diffY);
     if (uncertainty > 100){
         uncertainty = 100;
-    }
+	}
+	else if (uncertainty < 10) {
+		uncertainty = 10;
+
+	}
 }
 Mat Bee::printBee(Mat image) {
     

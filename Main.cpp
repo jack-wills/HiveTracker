@@ -27,7 +27,7 @@ fpsCounter fps;
 
 int main(int argc, const char * argv[]) {
     ocl::setUseOpenCL(true);
-    cap = VideoCapture("/Users/Jack/Desktop/OpenCV Bees/bees.mp4");
+    cap = VideoCapture("C:/Users/Jack/Desktop/University Work/bees.mp4");
     backgroundSubtractor = createBackgroundSubtractorKNN(500, 10000.0, true);
     const int scale = findScaleFactor();
     Mat imgRaw1;
@@ -151,7 +151,6 @@ void matchContoursToBees(vector<vector<Point>> &contours, vector<Bee> &beeArray,
     int closestContourIndex;
     int currentBeeIndex;
     int currentDistance;
-    
     for (int i = 0; i < contours.size(); i++) {
         for (int j = 0; j < beeArray.size(); j++) {
             distances[j][i] = pointPolygonTest(contours[i], beeArray[j].getPrediction(), true); //Distance between current contour and current bee prediction location, positive numbers are inside
@@ -166,21 +165,23 @@ void matchContoursToBees(vector<vector<Point>> &contours, vector<Bee> &beeArray,
         for (int i = 0; i < contours.size(); i++) {
             while (completedIndex[i] == 0) {
                 closestContourIndex = i; //Contour array index
-                currentBeeIndex = 1; //Bees array index
-                currentDistance = closestBee[i]; //Distance from current contour to diffrent bees
+				bool noMatchingBee = 1;
                 if(!beeArray[closestBeeIndex[i]].beeUpdated()){
+					noMatchingBee = 0;
                     currentBeeIndex = closestBeeIndex[i]; //Bees array index
                     currentDistance = closestBee[i]; //Distance from current contour to diffrent bees
                 }else{
-                    int shortestDistance = -10000;
                     for(int j = 0; j < beeArray.size(); j++){
-                        if(j != closestBeeIndex[i] && distances[j][i] > shortestDistance){
-                            shortestDistance = distances[j][i];
+                        if(j != closestBeeIndex[i] && distances[j][i] > currentDistance){
+							noMatchingBee = 0;
+							currentDistance = distances[j][i];
                             currentBeeIndex = j; //Bees array index
-                            currentDistance = shortestDistance; //Distance from current contour to diffrent bees
                         }
                     }
                 }
+				if (noMatchingBee) {
+					break;
+				}
                 for (int j = i + 1; j < contours.size(); j++) {
                     if (closestBeeIndex[j] == currentBeeIndex && completedIndex[j] == 0) { //
                         completedIndex[j] = 1;
