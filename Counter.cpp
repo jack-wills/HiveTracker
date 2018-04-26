@@ -11,7 +11,7 @@ Counter::Counter(vector<Bee>& bees, int width, int height):beesArray(bees), imgW
 
 void Counter::updateCounter() {
     for (int i = 0; i < beesArray.size(); i++) {
-        if ((min(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) <= imgWidth)&& (max(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) >= imgWidth)) {
+        if ((min(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) <= imgWidth)&& (max(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) >= imgWidth) && beesArray[i].beeUpdated()) {
             if (beesArray[i].getCenter().x <= beesArray[i].getPreviousCenter().x) {
                 enterCounter++;
             }

@@ -30,64 +30,76 @@ int main(int argc, const char * argv[]) {
     cap = VideoCapture("C:/Users/Jack/Desktop/University Work/bees.mp4");
     backgroundSubtractor = createBackgroundSubtractorKNN(500, 10000.0, true);
     const int scale = findScaleFactor();
-    Mat imgRaw1;
-    cap.read(imgRaw1);
-    Counter beeCounter(beeArray, imgRaw1.cols, imgRaw1.rows);
-    while (cap.isOpened() && waitKey(1) != 27) {
-        cap.read(imgRaw1);
-        UMat imgRaw;
-        imgRaw1.copyTo(imgRaw);
+    UMat imgRaw;
+    cap.read(imgRaw);
+    Counter beeCounter(beeArray, imgRaw.cols, imgRaw.rows);
+	//int frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
+	//int frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+	//VideoWriter video("out.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, Size(frame_width, frame_height), true);
+
+	while (cap.isOpened() && waitKey(1) != 27) {
+        cap.read(imgRaw);
+		if (imgRaw.empty()) {
+			break;
+		}
+		//imshow("Raw Image", imgRaw);
         UMat movingObjects;
         backgroundSubtraction(imgRaw, movingObjects, backgroundSubtractor, scale);
         //imshow("Background", movingObjects);
         
         UMat image;
         resize(imgRaw, image, imgRaw.size() / (scale / 2));
-        
+
         UMat backgroundFilled;
         fillMask(movingObjects, backgroundFilled);
         //imshow("Filled Background", backgroundFilled);
-        
+
         UMat maskComb;
         thresholdBee(image, maskComb, backgroundFilled);
-        
+
+		
         resize(maskComb, maskComb, imgRaw.size());
         //imshow("Combined Mask", maskComb);
-        
         vector<vector<Point> > contours;
         vector<Vec4i> hierarchy;
         findContours(maskComb, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
         
         vector<vector<Point> > contoursReduced;
         reduceContours(contours, contoursReduced, scale);
+		Mat imgContours;
+		imgRaw.copyTo(imgContours);
+		for (int i = 0; i < contoursReduced.size(); i++) {
+			drawContours(imgContours, contoursReduced, i, Scalar(255, 0, 255), 2);
+		}
+		//imshow("Contours", imgContours);
         
         vector<int> contourUsed(contoursReduced.size(), -1);
-        
         matchContoursToBees(contoursReduced, beeArray, contourUsed);
         
         
         //If a contour is still present and an appropriate bee cannot be Matched to it, create a new Bee object
         createNewBees(contoursReduced, beeArray, contourUsed, tags);
         
-        
         Mat output;
         imgRaw.copyTo(output);
         
         printBees(output, beeArray);
-        
-        //Delete any bees that have not been updated for a certain amount of frames (Amount defined in Bee class)
-        clearLostBees(beeArray, tags);
-        
+
+		//imshow("Bees", output);
         beeCounter.updateCounter();
-        output = beeCounter.drawCounter(output);
-        
+        //output = beeCounter.drawCounter(output);
+		//video.write(output);
+		//imshow("Counter", output);
         fps.updateFps();
-        output = fps.printFPS(output);
+        //output = fps.printFPS(output);
+        //imshow("Output", output);
+
+		//Delete any bees that have not been updated for a certain amount of frames (Amount defined in Bee class)
+		clearLostBees(beeArray, tags);
         
-        imshow("Output", output);
-        
-        while(waitKey(0) == -1);
+        //while(waitKey(0) == -1);
     }
+	fps.printFps();
     return 0;
 }
 
@@ -120,7 +132,7 @@ void thresholdBee(UMat &input, UMat &output, UMat &Background) {
     UMat maskYellow, maskBlack, imgHsv;
     cvtColor(input, imgHsv, COLOR_BGR2HSV);
     Scalar lowerYellow = Scalar(12, 65, 40);
-    Scalar upperYellow = Scalar(24, 255, 250);
+    Scalar upperYellow = Scalar(24, 255, 255);
     Scalar lowerBlack = Scalar(0, 0, 0);
     Scalar upperBlack = Scalar(255, 255, 40);
     inRange(imgHsv, lowerYellow, upperYellow, maskYellow);

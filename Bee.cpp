@@ -4,7 +4,7 @@
 
 RNG rng(12345);
 
-Bee::Bee(int t, vector<Point> c): contour(c), tag(t), track(4) {
+Bee::Bee(int t, vector<Point> c): contour(c), tag(t), track(10) {
     trackPointer = 0;
     color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
     frameCount = 0;
@@ -20,7 +20,7 @@ Bee::Bee(int t, vector<Point> c): contour(c), tag(t), track(4) {
     previousCenter = center;
     searchRadius = 25;
     updateBee(contour);
-    uncertainty = 300;
+    uncertainty = 100;
     nextPrediction = center;
     kalmanCounter = 0;
     
@@ -113,8 +113,8 @@ void Bee::updateBee(vector<Point> newContour) {
     int diffX = center.x - nextPrediction.x;
     int diffY = center.y - nextPrediction.y;
     uncertainty = sqrt(diffX * diffX + diffY * diffY);
-    if (uncertainty > 100){
-        uncertainty = 100;
+    if (uncertainty > 50){
+        uncertainty = 50;
 	}
 	else if (uncertainty < 10) {
 		uncertainty = 10;
