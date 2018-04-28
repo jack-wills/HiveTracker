@@ -13,7 +13,7 @@ void createNewBees(vector<vector<Point>> &contours, vector<Bee> &beeArray, vecto
 void clearLostBees(vector<Bee> &beeArray, unordered_set<int> &tags);
 void printBees(Mat output, vector<Bee> &beeArray);
 
-
+//Different sized kernals for erosion and dilation
 Mat element3x3 = getStructuringElement(MORPH_RECT, Size(3, 3));
 Mat element5x5 = getStructuringElement(MORPH_RECT, Size(5, 5));
 Mat element7x7 = getStructuringElement(MORPH_RECT, Size(7, 7));
@@ -26,89 +26,106 @@ Ptr<BackgroundSubtractor> backgroundSubtractor;
 fpsCounter fps;
 
 int main(int argc, const char * argv[]) {
+    //Initiate OpenCL
     ocl::setUseOpenCL(true);
-    cap = VideoCapture("C:/Users/Jack/Desktop/University Work/bees.mp4");
+    
+    //Define file path for video, change to integer 0 for camera input
+    cap = VideoCapture("/Users/Jack/Desktop/OpenCV Bees/bees.mp4");
+    
+    //Initiate KNN background subtractor
     backgroundSubtractor = createBackgroundSubtractorKNN(500, 10000.0, true);
+    
+    //Find the apropriate image scale factor for input
     const int scale = findScaleFactor();
+    
+    //Read first frame of input to get input image size
     UMat imgRaw;
     cap.read(imgRaw);
+    
+    //Initiate counter object
     Counter beeCounter(beeArray, imgRaw.cols, imgRaw.rows);
-	//int frame_width = cap.get(CV_CAP_PROP_FRAME_WIDTH);
-	//int frame_height = cap.get(CV_CAP_PROP_FRAME_HEIGHT);
-	//VideoWriter video("out.avi", CV_FOURCC('M', 'J', 'P', 'G'), 10, Size(frame_width, frame_height), true);
-
+    
 	while (cap.isOpened() && waitKey(1) != 27) {
+        //Read frame from input video
         cap.read(imgRaw);
 		if (imgRaw.empty()) {
-			break;
+			break; //Quit program if video has ended or camera disconnected
 		}
 		//imshow("Raw Image", imgRaw);
+        
+        //Isolate moving objects from image
         UMat movingObjects;
         backgroundSubtraction(imgRaw, movingObjects, backgroundSubtractor, scale);
         //imshow("Background", movingObjects);
         
+        //Resize to double scale image
         UMat image;
         resize(imgRaw, image, imgRaw.size() / (scale / 2));
 
+        //Fill background mask
         UMat backgroundFilled;
         fillMask(movingObjects, backgroundFilled);
         //imshow("Filled Background", backgroundFilled);
 
+        //Threshold image for black and yellow colours
         UMat maskComb;
         thresholdBee(image, maskComb, backgroundFilled);
-
 		
+        //Restore mask to full size, ready for contours
         resize(maskComb, maskComb, imgRaw.size());
         //imshow("Combined Mask", maskComb);
+        
+        //Find the contours of the image
         vector<vector<Point> > contours;
         vector<Vec4i> hierarchy;
         findContours(maskComb, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
         
+        //Function to remove too small and too large contours
         vector<vector<Point> > contoursReduced;
         reduceContours(contours, contoursReduced, scale);
-		Mat imgContours;
-		imgRaw.copyTo(imgContours);
-		for (int i = 0; i < contoursReduced.size(); i++) {
-			drawContours(imgContours, contoursReduced, i, Scalar(255, 0, 255), 2);
-		}
-		//imshow("Contours", imgContours);
         
+        //Data association algorithm
         vector<int> contourUsed(contoursReduced.size(), -1);
         matchContoursToBees(contoursReduced, beeArray, contourUsed);
-        
         
         //If a contour is still present and an appropriate bee cannot be Matched to it, create a new Bee object
         createNewBees(contoursReduced, beeArray, contourUsed, tags);
         
+        //Convert from UMat to Mat for drawing functions
         Mat output;
         imgRaw.copyTo(output);
         
+        //Print all active bee objects
         printBees(output, beeArray);
-
 		//imshow("Bees", output);
+        
+        //Update and draw counter onto output
         beeCounter.updateCounter();
-        //output = beeCounter.drawCounter(output);
-		//video.write(output);
+        output = beeCounter.drawCounter(output);
 		//imshow("Counter", output);
+        
+        //Update and print FPS
         fps.updateFps();
-        //output = fps.printFPS(output);
-        //imshow("Output", output);
+        output = fps.printFPS(output);
+        imshow("Output", output);
 
 		//Delete any bees that have not been updated for a certain amount of frames (Amount defined in Bee class)
 		clearLostBees(beeArray, tags);
         
+        //Uncomment when step through is required
         //while(waitKey(0) == -1);
     }
-	fps.printFps();
     return 0;
 }
 
+//Dynamically scale input
 int findScaleFactor(void) {
     UMat input;
     cap.read(input);
     return int(float(input.cols) / 160.0f);
 }
 
+//Function to isolate moving objects from image
 void backgroundSubtraction(UMat &input, UMat &output, Ptr<BackgroundSubtractor> &bgSub, int scale) {
     UMat image;
     resize(input, image, input.size() / scale);
@@ -121,6 +138,7 @@ void backgroundSubtraction(UMat &input, UMat &output, Ptr<BackgroundSubtractor> 
     dilate(output, output, element3x3);
 }
 
+//Fill holes present in a mask using flood fill
 void fillMask(UMat &input, UMat &output) {
     input.copyTo(output);
     floodFill(output, Point(0, 0), Scalar(255));
@@ -128,6 +146,7 @@ void fillMask(UMat &input, UMat &output) {
     bitwise_or(input, input, output);
 }
 
+//Threshold image for yellow and black, and combine with background mask
 void thresholdBee(UMat &input, UMat &output, UMat &Background) {
     UMat maskYellow, maskBlack, imgHsv;
     cvtColor(input, imgHsv, COLOR_BGR2HSV);
@@ -144,6 +163,7 @@ void thresholdBee(UMat &input, UMat &output, UMat &Background) {
     fillMask(maskComb, output);
 }
 
+//Remove contours out of defined size range
 void reduceContours(vector<vector<Point>> &contours, vector<vector<Point>> &contoursReduced, int scale) {
     
     for (int i = 0; i < contours.size(); i++)
@@ -156,6 +176,7 @@ void reduceContours(vector<vector<Point>> &contours, vector<vector<Point>> &cont
     contours.clear();
 }
 
+//Data association
 void matchContoursToBees(vector<vector<Point>> &contours, vector<Bee> &beeArray, vector<int> &contourUsed) {
     vector<vector<int>> distances(beeArray.size(), vector<int>(contours.size(), -10000));
     vector<int> closestBee(contours.size(), -10000);
@@ -207,8 +228,8 @@ void matchContoursToBees(vector<vector<Point>> &contours, vector<Bee> &beeArray,
                     completedIndex[i] = 1;
                 }
                 if (currentDistance > -2 * beeArray[currentBeeIndex].getUncertainty()) { //Search area is based on current velocity
-                    beeArray[currentBeeIndex].updateBee(contours[closestContourIndex]);
-                    beeArray[currentBeeIndex].updateKalman();
+                    beeArray[currentBeeIndex].updateBee(contours[closestContourIndex]); //Recalculate values of position and uncertainty
+                    beeArray[currentBeeIndex].updateKalman(); //Update objects kalman filter with new values
                     contourUsed[closestContourIndex] = 1;
                 }
             }
@@ -219,6 +240,7 @@ void matchContoursToBees(vector<vector<Point>> &contours, vector<Bee> &beeArray,
     }
 }
 
+//Function to creat new bee objects
 void createNewBees(vector<vector<Point>> &contours, vector<Bee> &beeArray, vector<int> &contourUsed, unordered_set<int> &tags) {
     
     for (int i = 0; i < contours.size(); i++) {

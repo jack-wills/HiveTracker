@@ -10,28 +10,18 @@ fpsCounter::fpsCounter()
 }
 
 void fpsCounter::updateFps() {
-    frameCounter++;
-    if (time(0) - timeStart >= 1) {
-        fps = frameCounter;
-		fpsVec.push_back(fps);
-		cout << fps << endl;
+    frameCounter++; //Increase frame counter
+    if (time(0) - timeStart >= 1) { //After 1 second has passed since last record
+        fps = frameCounter; //Frame counter after 1 second is equal to fps
+		cout << fps << endl; //Print vector to console. TODO send this data over wifi, already done via SSH
         frameCounter = 0;
-        timeStart = time(0);
+        timeStart = time(0); //Reset time
     }
 }
 
 Mat fpsCounter::printFPS(Mat image) {
     putText(image, to_string(fps), Point(100, 100), 0, 2, Scalar(255, 255, 255));
     return image;
-}
-
-void fpsCounter::printFps() {
-	ofstream outputFile;
-	outputFile.open("FPS.txt");
-	for (int i = 0; i < fpsVec.size(); i++) {
-		outputFile << fpsVec[i] << endl;
-	}
-	outputFile.close();
 }
 
 fpsCounter::~fpsCounter()

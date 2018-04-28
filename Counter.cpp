@@ -10,15 +10,15 @@ Counter::Counter(vector<Bee>& bees, int width, int height):beesArray(bees), imgW
 }
 
 void Counter::updateCounter() {
-    for (int i = 0; i < beesArray.size(); i++) {
-        if ((min(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) <= imgWidth)&& (max(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) >= imgWidth) && beesArray[i].beeUpdated()) {
-            if (beesArray[i].getCenter().x <= beesArray[i].getPreviousCenter().x) {
+    for (int i = 0; i < beesArray.size(); i++) { //Loop through bee array
+        if ((min(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) <= imgWidth)&& (max(beesArray[i].getCenter().x, beesArray[i].getPreviousCenter().x) >= imgWidth) && beesArray[i].beeUpdated()) { //If the bee object has drossed the line
+            if (beesArray[i].getCenter().x <= beesArray[i].getPreviousCenter().x) { //Crossed the line travelling left
                 enterCounter++;
             }
-            else {
+            else { //Travelling right
                 exitCounter++;
             }
-            color = Scalar(0, 255, 0);
+            color = Scalar(0, 255, 0); //Make line green to indicate crossing
         }
     }
 }

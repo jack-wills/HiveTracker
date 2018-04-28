@@ -5,10 +5,8 @@
 
 #pragma once
 
-//#include "targetver.h"
-
+//Inclusion of relevent libraries and bespoke header files
 #include <stdio.h>
-//#include <tchar.h>
 #include <unordered_set>
 #include <iostream>
 #include <opencv2/opencv.hpp>
@@ -16,14 +14,9 @@
 #include "Bee.h"
 #include "fpsCounter.h"
 #include "Counter.h"
-//#include "MultiBee.h"
 
+//To prevent writing std:: and cv:: infront of every STL and OpenCV library function
 using namespace std;
 using namespace cv;
 
 
-
-
-
-
-// TODO: reference additional headers your program requires here

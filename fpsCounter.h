@@ -6,7 +6,6 @@ class fpsCounter
 public:
     fpsCounter();
 	void updateFps();
-	void printFps();
     Mat printFPS(Mat image);
     ~fpsCounter();
 private:
